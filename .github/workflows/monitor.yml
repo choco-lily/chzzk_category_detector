@@ -1,0 +1,31 @@
+name: Chzzk Category Monitor
+
+on:
+  schedule:
+    # 5분마다 실행 (GitHub Actions의 최소 권장 주기는 5-10분입니다)
+    - cron: '*/5 * * * *'
+  workflow_dispatch: # 수동 실행 가능하게 설정
+
+jobs:
+  check-and-notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Detector
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          CATEGORY_ID: ${{ vars.CATEGORY_ID || 'DJMAX_RESPECT_V' }}
+          VIEWER_THRESHOLD: ${{ vars.VIEWER_THRESHOLD || '1000' }}
+          RUN_ONCE: 'true'
+        run: node index.js
