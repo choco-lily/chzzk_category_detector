@@ -75,6 +75,7 @@ GitHub Actions를 통해 서버 없이 무료로 24시간 모니터링 시스템
    - 이름: `DISCORD_WEBHOOK_URL` / 값: 자신의 웹훅 URL
 3. **Variables 등록 (선택 사항)**:
    - `Variables` 탭에서 `CATEGORY_ID`, `VIEWER_THRESHOLD` 등을 추가하여 코드 수정 없이 설정을 제어할 수 있습니다.
+   - **`DISABLE_MONITOR`**: 값을 `true`로 설정하면 GitHub Actions 작동을 일시 중지할 수 있습니다. (서버 전용으로 사용할 때 유용)
 4. **워크플로우 확인**:
    - `.github/workflows/monitor.yml` 설정에 따라 기본 5분마다 자동으로 실행됩니다.
    - `Actions` 탭에서 `Run workflow`를 눌러 수동으로 즉시 실행 테스트가 가능합니다.

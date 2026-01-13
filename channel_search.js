@@ -137,11 +137,13 @@ async function sendDiscordNotification(channel) {
     }
 }
 
-// 1회 실행 (GitHub Actions용)
+// 실행
 if (require.main === module) {
-    searchChannels().then(() => {
-        if (process.env.RUN_ONCE === 'true') {
-            process.exit(0);
-        }
-    });
+    searchChannels();
+    
+    if (process.env.RUN_ONCE !== 'true') {
+        const INTERVAL = parseInt(process.env.CHECK_INTERVAL || '300000'); // 기본 5분
+        console.log(`서버 모드 실행 중... (체크 주기: ${INTERVAL / 1000}초)`);
+        setInterval(searchChannels, INTERVAL);
+    }
 }

@@ -12,6 +12,8 @@ permissions:
 
 jobs:
   check-and-notify:
+    # DISABLE_MONITOR 변수가 'true'가 아닐 때만 실행 (기본값: 실행)
+    if: vars.DISABLE_MONITOR != 'true'
     runs-on: ubuntu-latest
 
     steps:
