@@ -49,10 +49,11 @@ jobs:
         continue-on-error: true
 
       - name: Delete old workflow runs
-        if: github.event_name == 'schedule'
         continue-on-error: true
         run: |
-          gh run delete --all --created "<$(date -d '1 day ago' +%Y-%m-%dT%H:%M:%SZ)"
+          # 1일 이상 된 모든 완료된 워크플로우 실행 기록 삭제
+          # gh run list로 대상을 찾고 xargs로 하나씩 삭제합니다.
+          gh run list --limit 1000 --created "<$(date --date='1 day ago' +%Y-%m-%d)" --json databaseId --jq '.[].databaseId' | xargs -I {} gh run delete {}
         env:
           GH_TOKEN: ${{ github.token }}
 
